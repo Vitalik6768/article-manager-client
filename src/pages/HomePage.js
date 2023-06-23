@@ -17,6 +17,8 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 
 function HomePage() {
@@ -28,6 +30,7 @@ function HomePage() {
   const [message, setMessage] = useState();
   const [snackbarColor, setSnackbarColor] = useState('success');
   const [token, setToken] = useState('');
+  let [loading, setLoading] = useState(true);
 
   const Item = styled(Paper)(({ theme }) => ({
 
@@ -44,7 +47,7 @@ function HomePage() {
       setUserId(decodedToken.id);
       setToken(token);
       getDataByCorrentMonth(decodedToken.id, token)
-     } //else {
+    } //else {
     //   riderectToLogin();
 
     // }
@@ -69,12 +72,16 @@ function HomePage() {
         'authorization': `Bearer ${token}`
       }
     });
+    setLoading(loading = true);
+    console.log(loading);
     const data = await response.json();
     if (response.status == 400) {
-      
 
-    }else{
+
+    } else {
       setBackEndData(data);
+      setLoading(loading = false);
+      console.log(loading);
     }
 
   }
@@ -88,10 +95,12 @@ function HomePage() {
         'authorization': `Bearer ${token}`
       }
     });
+    setLoading(loading = true);
     const data = await response.json();
     setBackEndData(data);
-    
-    
+    setLoading(loading = false);
+
+
   }
 
   async function getDataByAlerts() {
@@ -283,10 +292,25 @@ function HomePage() {
         </Grid>
       </Box>
 
+
+
+      {loading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <DataTable customStyles={tableCustomStyles} columns={columns} data={backendData.articles} />
+      )}
+
+
+      {/* <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+      </Box>
+
       <DataTable
         customStyles={tableCustomStyles}
         columns={columns} data={backendData.articles}
-      />
+      /> */}
 
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <MuiAlert onClose={handleClose} severity={snackbarColor} sx={{ width: '100%' }}>

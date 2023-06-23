@@ -76,8 +76,9 @@ function Registration() {
                 token: token
             })
         };
-        const response = await fetch('auth/register/', requestOptions);
+        const response = await fetch('https://article-manager-api.onrender.com/auth/register/', requestOptions);
         const data = await response.json();
+        
 
         if (response.status === 400) {
             setColor('red-text right-align');

@@ -1,0 +1,7 @@
+#edit {
+    cursor: pointer;
+}
+
+#edit:hover {
+    color: blue;
+}

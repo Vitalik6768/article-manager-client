@@ -1,0 +1,26 @@
+a:link {
+    color: red;
+    text-decoration: none;
+  }
+  
+  /* visited link */
+  a:visited {
+    text-decoration: none;
+  }
+  
+  /* mouse over link */
+
+  
+  /* selected link */
+  a:active {
+    color: blue;
+    text-decoration: none;
+  }
+
+  #editIcon {
+    cursor: pointer;
+  }
+  
+  #editIcon:hover {
+    color: blue;
+  }

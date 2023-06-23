@@ -1,0 +1,12 @@
+.modal { 
+    width: 50% !important;
+    overflow-y: hidden !important ; 
+    
+
+
+}  /* increase the width as per you desire */
+
+
+::placeholder{
+    color: rgb(66, 66, 66);
+}

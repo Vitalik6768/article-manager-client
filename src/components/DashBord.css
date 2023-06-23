@@ -1,0 +1,22 @@
+#alerts {
+    cursor: pointer;
+}
+
+#alerts:hover {
+    color: rgb(68, 4, 216);
+}
+
+#alerts{
+    color: rgb(240, 9, 9);
+    font-size: 20px;
+}
+
+#badget{
+    color: green;
+    font-size: 20px;
+}
+
+#articles-count{
+    color: blue;
+    font-size: 20px;
+}

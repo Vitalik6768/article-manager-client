@@ -1,0 +1,47 @@
+.chip {
+    display: inline-block !important;
+    height: 32px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 32px !important;
+    padding: 0 12px !important;
+    border-radius: 16px !important;
+    margin-bottom: 5px !important ;
+    margin-right: 5px !important;
+}
+
+
+
+.dropdown-content {
+    text-align: center !important;
+  }
+  
+  /* Style the dropdown items */
+  .dropdown-content li > a {
+   
+    display: block;
+    padding: 15px;
+    text-align: right !important;
+  }
+  
+ 
+  
+  /* Make the dropdown menu open upwards */
+  .dropdown-content--upward {
+    transform: translateY(-100%) !important;
+  }
+  
+  /* Set the dropdown menu width to match the button */
+  .dropdown-content.dropdown-content--upward,
+  .dropdown-content:not(.dropdown-content--upward) {
+    width: auto !important;
+    
+   
+    right: 0 !important;
+  }
+  
+  /* Set the dropdown menu position to align with the button */
+  .dropdown-content.dropdown-content--upward {
+    top: auto !important;
+   
+  }

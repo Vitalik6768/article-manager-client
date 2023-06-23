@@ -71,7 +71,7 @@ function HomePage() {
     });
     const data = await response.json();
     if (response.status == 400) {
-      //riderectToLogin();
+      
 
     }else{
       setBackEndData(data);

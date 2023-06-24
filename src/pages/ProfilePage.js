@@ -89,13 +89,17 @@ function ProfilePage() {
             <FileUpload onSubmit={() => testSub(username, token)} id={username} />
           </Box>
     
-
+          {loading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+              <CircularProgress />
+            </Box>
+          ) : (
             <Avatar
               alt="Your Avatar"
               src={`https://article-manager-api.onrender.com/images/${image}`}
               sx={{ width: 300, height: 300 }}
             />
-        
+          )}
         </Box>
       </>
     );

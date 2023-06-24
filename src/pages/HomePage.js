@@ -47,10 +47,10 @@ function HomePage() {
       setUserId(decodedToken.id);
       setToken(token);
       getDataByCorrentMonth(decodedToken.id, token)
-    } //else {
-    //   riderectToLogin();
+    } else {
+       riderectToLogin();
 
-    // }
+     }
 
   }, [])
 

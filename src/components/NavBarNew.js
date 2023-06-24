@@ -78,7 +78,7 @@ function NavBarNew(props) {
 
 
   return (
-    <AppBar position="static">
+    <AppBar data-testid="NavBarNew" position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography

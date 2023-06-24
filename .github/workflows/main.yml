@@ -24,4 +24,16 @@ jobs:
       - name: Run tests
         run: npm test
 
+  deploy:
+      -name: Deploy
+      -needs: [test]
+      -runs-on: ubuntu-latest
+
+
+
+      steps:
+      - name: Deploy to render
+      - uses: nwtgck/actions-netlify@v2
+
+
 

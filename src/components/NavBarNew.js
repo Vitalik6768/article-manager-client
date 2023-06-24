@@ -100,7 +100,7 @@ function NavBarNew(props) {
 
             }}
           >
-            Article Manager
+            Article Manager 3.0
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

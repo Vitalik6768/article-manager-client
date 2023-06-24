@@ -280,6 +280,7 @@ function HomePage() {
 
 
       <Box sx={{ flexGrow: 1, m: 6 }}>
+        <h1>fghfgh</h1>
         <Grid container spacing={2}>
           <Grid item xs={8}>
             <Item sx={{ textAlign: 'left', mt: 5 }} elevation={0}><SignInModel onSubmit={postData} sx={{ display: 'inline-flex' }} />
@@ -299,8 +300,10 @@ function HomePage() {
           <CircularProgress />
         </Box>
       ) : (
+        
         <DataTable customStyles={tableCustomStyles} columns={columns} data={backendData.articles} />
       )}
+      
 
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <MuiAlert onClose={handleClose} severity={snackbarColor} sx={{ width: '100%' }}>

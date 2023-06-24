@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 function FileUpload(props) {
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState(null);
+    const [loading, setIsLoading] = useState(false);
 
     const handleFile = (e) => {
         setFile(e.target.files[0]);
@@ -33,6 +34,8 @@ function FileUpload(props) {
         if (file == null) {
             return setMessage('נא לבחור תמונה')
         }
+        setMessage('....מעלה את התמונה');
+
 
         const formData = new FormData();
 
@@ -48,14 +51,15 @@ function FileUpload(props) {
                     method: 'POST',
                     body: formData
                 });
-
                 const data = await response.json();
 
                 if (response.status === 400) {
                     setMessage(data.message);
                 } else {
+                    setIsLoading(false);
                     console.log(data);
                     props.onSubmit();
+                    
                     setMessage('הועלה בהצלחה');
                 }
 
@@ -84,7 +88,10 @@ function FileUpload(props) {
                     </IconButton>
 
                 </Stack>
-                <Typography sx={{ mt: 3, color: "red" }} variant="h6">{message}</Typography>
+
+                    <Typography sx={{ mt: 3, color: "red" }} variant="h6">{message}</Typography>
+
+                
             </Container>
 
             <div>

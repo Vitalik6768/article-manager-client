@@ -13,41 +13,32 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DataTable from 'react-data-table-component';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
 import './Admin.css';
 
 
 
 const Admin = () => {
   const [username, setUsername] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [name, setName] = useState('');
-  // const [role, setRole] = useState('');
   const [token, setToken] = useState('');
   const [messageAdmin, setMessageAdmin] = useState('');
   const [message, setMessage] = useState('');
   const [open, setOpen] = useState(false);
   const [backendData, setBackEndData] = useState([]);
   const [snackbarColor, setSnackbarColor] = useState('success');
+  let [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const cookies = new Cookies();
     const token = cookies.get('jwt_authentication');
     if (token) {
-      //setJwtToken(token);
       const decodedToken = jwt(token);
       setUsername(decodedToken.id);
-      // setName(decodedToken.name);
-      // setEmail(decodedToken.email);
-      // setRole(decodedToken.role);
       setToken(token);
       getAllUsers(decodedToken.id, token);
 
     }
 
-
-
-
-    // Add any side effects you need here
   }, []);
 
   async function getAllUsers(id, token) {
@@ -56,12 +47,12 @@ const Admin = () => {
         'authorization': `Bearer ${token}`
       }
     });
+    setLoading(loading = true);
     const data = await response.json();
     if (response.status == 400) {
       setMessageAdmin(data.message)
     }
-
-    console.log(data);
+    setLoading(loading = false);
     setBackEndData(data.users);
 
 
@@ -94,8 +85,8 @@ const Admin = () => {
     if (response.status === 400) {
       setSnackbarColor('error');
       return setMessage(data.message)
-  }
-    
+    }
+
 
     setMessage('המשתמש הוסף בהצלחה')
     setSnackbarColor('success');
@@ -200,7 +191,7 @@ const Admin = () => {
     },
     {
       name: "תמונה",
-      selector: (row) => <Avatar src={`http://localhost:5000/images/${row.image}`} />,
+      selector: (row) => <Avatar src={`https://article-manager-api.onrender.com/images/${row.image}`} />,
     }
   ];
 
@@ -221,11 +212,20 @@ const Admin = () => {
         <Box sx={{ width: '50%', ml: 3, mb: 3, mt: 10 }}>
           <AddNewUser onSubmit={AddUser} />
         </Box>
-        <DataTable
-          customStyles={tableCustomStyles}
-          columns={columns} data={backendData}
-          fixedHeader
-        />
+
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <DataTable
+            customStyles={tableCustomStyles}
+            columns={columns} data={backendData}
+            fixedHeader
+          />
+        )}
+
+
       </Box>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <MuiAlert onClose={handleClose} severity={snackbarColor} sx={{ width: '100%' }}>

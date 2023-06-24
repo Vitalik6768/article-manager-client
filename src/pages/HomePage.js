@@ -302,16 +302,6 @@ function HomePage() {
         <DataTable customStyles={tableCustomStyles} columns={columns} data={backendData.articles} />
       )}
 
-
-      {/* <Box sx={{ display: 'flex' }}>
-        <CircularProgress />
-      </Box>
-
-      <DataTable
-        customStyles={tableCustomStyles}
-        columns={columns} data={backendData.articles}
-      /> */}
-
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <MuiAlert onClose={handleClose} severity={snackbarColor} sx={{ width: '100%' }}>
           {message}

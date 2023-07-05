@@ -4,14 +4,7 @@ import Registration from './pages/Registration';
 import Login from './pages/Login';
 import Admin from './pages/Admin';
 import LogOut from './pages/LogOut';
-import Cookies from 'universal-cookie';
-import jwt from 'jwt-decode';
 import ProfilePage from './pages/ProfilePage';
-
-const cookies = new Cookies();
-const jwtToken = cookies.get('jwt_authentication');
-
-
 
 
 

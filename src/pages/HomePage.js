@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import NavBarNew from '../components/NavBarNew';
 import DashBordNew from '../components/DashBordNew';
@@ -18,7 +17,7 @@ import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { fetchData, addArticle, updateArticle, fetchDataByMonth, updateArticleStatus } from './articleApi';
 
 
 function HomePage() {
@@ -36,7 +35,7 @@ function HomePage() {
 
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    height: '100%', // Set a fixed height for the items
+    height: '100%', 
   }));
 
 
@@ -49,10 +48,75 @@ function HomePage() {
       getDataByCorrentMonth(decodedToken.id, token)
     } else {
        riderectToLogin();
-
      }
 
   }, [])
+
+
+
+  async function getDataByCorrentMonth(userId, token) {
+    setLoading(true);
+    try {
+      const data = await fetchData(userId, token);
+      setBackEndData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
+
+  async function getDataByMonth(month) {
+    setLoading(true);
+    try {
+      const data = await fetchDataByMonth(userId, token, month);
+      setBackEndData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function getDataByAlerts() {
+    const response = await fetch(`https://article-manager-api.onrender.com/alerts/${userId}`);
+    const data = await response.json();
+    setBackEndData(data);
+  }
+
+
+
+
+  async function postData(dataObj) {
+    try {
+      const data = await addArticle(dataObj, userId, token);
+      setBackEndData(data);
+      messageHandling('המאמר הוסף בהצלחה', true)
+    } catch (error) {
+      messageHandling(error.message, false)
+    }
+  }
+
+  async function updateData(dataObj) {
+    try {
+      const data = await updateArticle(dataObj, userId, token);
+      setBackEndData(data);
+      messageHandling('המאמר נערך בהצלחה', true)
+    } catch (error) {
+      messageHandling(error.message, false)
+    }
+  }
+
+  async function updateStatus(dataObj, id) {
+    try {
+      await updateArticleStatus(id, dataObj, userId, token);
+      messageHandling('סטטוס עודכן בהצלחה', true)
+    } catch (error) {
+      messageHandling(error.message, false)
+    }
+  }
+
+  //snackbar
 
   const handleClick = () => {
     setOpen(true);
@@ -66,149 +130,12 @@ function HomePage() {
     setOpen(false);
   };
 
-  async function getDataByCorrentMonth(userId, token) {
-    const response = await fetch(`https://article-manager-api.onrender.com/articles/user/${userId}`, {
-      headers: {
-        'authorization': `Bearer ${token}`
-      }
-    });
-    setLoading(loading = true);
-    console.log(loading);
-    const data = await response.json();
-    if (response.status == 400) {
-
-
-    } else {
-      setBackEndData(data);
-      setLoading(loading = false);
-      console.log(loading);
-    }
-
+  function messageHandling(mesg, stat){
+    setMessage(mesg);
+    setSnackbarColor(stat ? 'success' : 'error');
+    handleClick();
   }
 
-
-
-  async function getDataByMonth(month) {
-    console.log('ok');
-    const response = await fetch(`https://article-manager-api.onrender.com/articles/${month}/user/${userId}`, {
-      headers: {
-        'authorization': `Bearer ${token}`
-      }
-    });
-    setLoading(loading = true);
-    const data = await response.json();
-    setBackEndData(data);
-    setLoading(loading = false);
-
-
-  }
-
-  async function getDataByAlerts() {
-    const response = await fetch(`https://article-manager-api.onrender.com/alerts/${userId}`);
-    const data = await response.json();
-    setBackEndData(data);
-
-  }
-
-
-
-
-  async function postData(dataObj) {
-    console.log('data added ');
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        client_name: dataObj.client_name,
-        article_name: dataObj.article_name,
-        contractor: dataObj.contractor,
-        article_type: dataObj.article_type,
-        status: dataObj.status,
-        user_id: userId
-      })
-    };
-    const response = await fetch('https://article-manager-api.onrender.com/articles/newArticle/', requestOptions);
-    const data = await response.json();
-
-    if (response.status == 400) {
-      setMessage(data.message);
-      setSnackbarColor('error');
-      handleClick();
-
-
-    } else {
-      setBackEndData(data);
-      setMessage('המאמר הוסף בהצלחה')
-      setSnackbarColor('success');
-      handleClick();
-
-    }
-
-  }
-
-  async function updateData(dataObj, id) {
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        client_name: dataObj.client_name,
-        article_name: dataObj.article_name,
-        contractor: dataObj.contractor,
-        article_type: dataObj.article_type
-
-      })
-    };
-    const response = await fetch(`https://article-manager-api.onrender.com/articles/${dataObj.id}/user/${userId}`, requestOptions);
-    const data = await response.json();
-    if (response.status == 400) {
-      setMessage(data.message);
-      setSnackbarColor('error');
-      handleClick();
-
-    } else {
-      setBackEndData(data);
-      setMessage('המאמר נערך בהצלחה')
-      setSnackbarColor('success');
-      handleClick();
-
-    }
-  }
-
-  async function updateStatus(dataObj, id) {
-
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        status: dataObj
-
-
-      })
-    };
-    const response = await fetch(`https://article-manager-api.onrender.com/articles/${id}/status/${userId}`, requestOptions);
-    const data = await response.json();
-    if (response.status == 400) {
-      setMessage(data.message);
-      setSnackbarColor('error');
-      handleClick();
-
-    } else {
-      setBackEndData(data);
-      setMessage('סטטוס עודכן בהצלחה')
-      setSnackbarColor('success');
-      handleClick();
-
-    };
-  }
 
   const riderectToLogin = () => {
     setTimeout(() => {

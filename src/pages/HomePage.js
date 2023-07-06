@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import NavBarNew from '../components/NavBarNew';
 import DashBordNew from '../components/DashBordNew';
+import columns from './columns';
 import DataTable from 'react-data-table-component';
 import { tableCustomStyles } from '../components/TableStyle';
 import SignInModel from '../components/SignInModel';
 import SelectMonth from '../components/SelectMonth';
-import EditModel from '../components/EditModel';
-import DropDownButton from '../components/DropDownButton';
 import Cookies from 'universal-cookie';
 import jwt from 'jwt-decode';
 import DisplayDate from '../components/DisplayDate';
@@ -145,51 +144,6 @@ function HomePage() {
 
 
 
-  const columns = [
-    {
-      name: "פעולות",
-      selector: (row) => <EditModel
-        onSubmit={updateData}
-        id={row.id}
-        client_name={row.client_name}
-        article_name={row.article_name}
-        contractor={row.contractor}
-        article_type={row.article_type}
-      />
-    },
-    {
-      name: "תאריך",
-      selector: (row) => new Date(row.created_at).toLocaleDateString(),
-
-    },
-    {
-      name: "סטטוס",
-      selector: (row) => <DropDownButton onClick={updateStatus} id={row.id} status={row.status} />
-    },
-    {
-      name: "מחיר",
-      selector: (row) => row.price.toFixed(1),
-    },
-    {
-      name: "סוג המאמר",
-      selector: (row) => row.article_type,
-    },
-    {
-      name: "ספק",
-      selector: (row) => row.contractor,
-    },
-    {
-      name: "שם המאמר",
-      selector: (row) => row.article_name,
-    },
-    {
-      name: "שם לקוח",
-      selector: (row) => row.client_name,
-    }
-  ];
-
-
-
   return (
     <div>
       <NavBarNew image={backendData.image} />
@@ -228,7 +182,7 @@ function HomePage() {
         </Box>
       ) : (
         
-        <DataTable customStyles={tableCustomStyles} columns={columns} data={backendData.articles} />
+        <DataTable customStyles={tableCustomStyles} columns={columns(updateData, updateStatus)} data={backendData.articles} />
       )}
       
 

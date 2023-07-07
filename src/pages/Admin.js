@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { tableCustomStyles } from '../components/TableStyle';
 import AddNewUser from '../components/AddNewUser';
-import DeleteIcon from '@mui/icons-material/Delete';
 import columns from '../dataTables/adminColumns';
 import DataTable from 'react-data-table-component';
 import Snackbar from '@mui/material/Snackbar';

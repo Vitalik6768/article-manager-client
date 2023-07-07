@@ -14,6 +14,8 @@ import DataTable from 'react-data-table-component';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
+import { fetchUsersData, addNewUsers } from '../apiCalls/adminApi';
+
 import './Admin.css';
 
 
@@ -43,58 +45,65 @@ const Admin = () => {
 
   }, []);
 
+
   async function getAllUsers(id, token) {
-    const response = await fetch(`https://article-manager-api.onrender.com/admin/${id}/`, {
-      headers: {
-        'authorization': `Bearer ${token}`
-      }
-    });
-    setLoading(loading = true);
-    const data = await response.json();
-    if (response.status == 400) {
-      setMessageAdmin(data.message)
+    setLoading(true);
+    try {
+      const data = await fetchUsersData(id, token);
+      setBackEndData(data.users);
+      console.log(data);
+      setLoading(false);
+    } catch (error) {
+      setMessageAdmin(error)
     }
-    setLoading(loading = false);
-    setBackEndData(data.users);
-
-
   }
 
 
-
-
   async function AddUser(dataObj, tokenCaptch) {
-    console.log('data added ');
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        name: dataObj.name,
-        email: dataObj.email,
-        password: dataObj.password,
-        passwordConfirm: dataObj.passwordConfirm,
-        role: dataObj.role,
-        token: tokenCaptch
 
-      })
-    };
-    console.log(tokenCaptch);
-    const response = await fetch(`https://article-manager-api.onrender.com/admin/${username}/register`, requestOptions);
-    const data = await response.json();
-    if (response.status === 400) {
-      setSnackbarColor('error');
-      return setMessage(data.message)
+    try {
+      const data = await addNewUsers(dataObj, tokenCaptch, token, username);
+      setBackEndData(data.users);
+      setMessage('המשתמש הוסף בהצלחה')
+      setSnackbarColor('success');
+      handleClick();
+
+    } catch (error) {
+         setSnackbarColor('error');
+         handleClick();
+         return setMessage(error)
     }
+    // console.log('data added ');
+    // const requestOptions = {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'authorization': `Bearer ${token}`
+    //   },
+    //   body: JSON.stringify({
+    //     name: dataObj.name,
+    //     email: dataObj.email,
+    //     password: dataObj.password,
+    //     passwordConfirm: dataObj.passwordConfirm,
+    //     role: dataObj.role,
+    //     token: tokenCaptch
+
+    //   })
+    // };
+    // console.log(tokenCaptch);
+    // const response = await fetch(`https://article-manager-api.onrender.com/admin/${username}/register`, requestOptions);
+    // const data = await response.json();
+    // if (response.status === 400) {
+    //   setSnackbarColor('error');
+    //   return setMessage(data.message)
+    // }
 
 
-    setMessage('המשתמש הוסף בהצלחה')
-    setSnackbarColor('success');
-    handleClick();
+    // setMessage('המשתמש הוסף בהצלחה')
+    // setSnackbarColor('success');
+    // handleClick();
 
-    setBackEndData(data.users);
+    // setBackEndData(data.users);
   }
 
 

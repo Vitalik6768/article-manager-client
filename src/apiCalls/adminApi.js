@@ -3,9 +3,9 @@
 const url = 'https://article-manager-api.onrender.com';
 
 
-export async function fetchData(userId, token) {
+export async function fetchUsersData(id, token) {
   
-  const response = await fetch(`${url}/articles/user/${userId}`, {
+  const response = await fetch(`${url}/admin/${id}/`, {
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -19,31 +19,26 @@ export async function fetchData(userId, token) {
 }
 
 
-export async function fetchDataByMonth(userId, token, month) {
+// export async function fetchDataByMonth(userId, token, month) {
   
-  const response = await fetch(`${url}/articles/${month}/user/${userId}`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
+//   const response = await fetch(`${url}/articles/${month}/user/${userId}`, {
+//     headers: {
+//       authorization: `Bearer ${token}`,
+//     },
+//   });
   
-  if (!response.ok) {
-    throw new Error('Failed to fetch data');
-  }
+//   if (!response.ok) {
+//     throw new Error('Failed to fetch data');
+//   }
   
-  return response.json();
-}
-
-
-
-// export async function getDataByAlerts(userId) {
-//   const response = await fetch(`${url}/alerts/${userId}`);
-//   const data = await response.json();
-
+//   return response.json();
 // }
 
 
-export async function addArticle(dataObj, userId, token) {
+
+
+
+export async function addNewUsers(dataObj, tokenCaptch, token, username) {
 
   
   const requestOptions = {
@@ -53,16 +48,16 @@ export async function addArticle(dataObj, userId, token) {
       authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      client_name: dataObj.client_name,
-      article_name: dataObj.article_name,
-      contractor: dataObj.contractor,
-      article_type: dataObj.article_type,
-      status: dataObj.status,
-      user_id: userId,
+      name: dataObj.name,
+      email: dataObj.email,
+      password: dataObj.password,
+      passwordConfirm: dataObj.passwordConfirm,
+      role: dataObj.role,
+      token: tokenCaptch
      }),
   };
 
-  const response = await fetch(`${url}/articles/newArticle/`, requestOptions);
+  const response = await fetch(`${url}/admin/${username}/register`, requestOptions);
 
   if (!response.ok) {
     const data = await response.json();

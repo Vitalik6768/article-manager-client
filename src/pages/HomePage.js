@@ -45,9 +45,7 @@ function HomePage() {
       setUserId(decodedToken.id);
       setToken(token);
       getArticlesByCurrentMonth(decodedToken.id, token)
-    } else {
-       riderectToLogin();
-     }
+    }; 
 
   }, [])
 
@@ -121,15 +119,6 @@ function HomePage() {
     setSnackbarColor(stat ? 'success' : 'error');
     handleClick();
   }
-
-
-  const riderectToLogin = () => {
-    setTimeout(() => {
-      window.location.replace('/login');
-    }, 1000);
-  }
-
-
 
   return (
     <div>

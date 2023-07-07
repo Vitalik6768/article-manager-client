@@ -4,12 +4,10 @@ import Cookies from 'universal-cookie';
 import jwt from 'jwt-decode';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
 import { tableCustomStyles } from '../components/TableStyle';
-import DropDownChangeRole from '../components/DropDownChangeRole';
-import DropDownChangeStatus from '../components/DropDownChangeStatus';
 import AddNewUser from '../components/AddNewUser';
 import DeleteIcon from '@mui/icons-material/Delete';
+import columns from '../dataTables/adminColumns';
 import DataTable from 'react-data-table-component';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
@@ -132,38 +130,6 @@ const Admin = () => {
 
 
 
-  const columns = [
-    {
-      name: "פעולות",
-      selector: (row) => <DeleteIcon id='deleteIcon' onClick={() => deleteUser(row.id)}></DeleteIcon>,
-    },
-
-    {
-      name: "סטטוס",
-      selector: (row) => <DropDownChangeStatus onClick={updateStatus} id={row.id} status={row.status} />
-    },
-    {
-      name: "תפקיד",
-      selector: (row) => <DropDownChangeRole onClick={updateRole} id={row.id} status={row.role} />
-    },
-    {
-      name: "מייל",
-      selector: (row) => row.email,
-    },
-    {
-      name: "שם משתמש",
-      selector: (row) => row.name,
-    },
-    {
-      name: "תמונה",
-      selector: (row) => <Avatar src={`https://article-manager-api.onrender.com/images/${row.image}`} />,
-    }
-  ];
-
-
-
-
-
   return (
     <>
       <NavBarNew />
@@ -185,8 +151,8 @@ const Admin = () => {
         ) : (
           <DataTable
             customStyles={tableCustomStyles}
-            columns={columns} data={backendData}
-            fixedHeader
+            columns={columns(updateStatus, updateRole, deleteUser)} data={backendData}
+            
           />
         )}
 

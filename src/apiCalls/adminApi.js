@@ -4,43 +4,24 @@ const url = 'https://article-manager-api.onrender.com';
 
 
 export async function fetchUsersData(id, token) {
-  
+
   const response = await fetch(`${url}/admin/${id}/`, {
     headers: {
       authorization: `Bearer ${token}`,
     },
   });
-  
+
   if (!response.ok) {
     throw new Error('Failed to fetch data');
   }
-  
+
   return response.json();
 }
 
 
-// export async function fetchDataByMonth(userId, token, month) {
-  
-//   const response = await fetch(`${url}/articles/${month}/user/${userId}`, {
-//     headers: {
-//       authorization: `Bearer ${token}`,
-//     },
-//   });
-  
-//   if (!response.ok) {
-//     throw new Error('Failed to fetch data');
-//   }
-  
-//   return response.json();
-// }
-
-
-
-
-
 export async function addNewUsers(dataObj, tokenCaptch, token, username) {
 
-  
+
   const requestOptions = {
     method: 'POST',
     headers: {
@@ -54,7 +35,7 @@ export async function addNewUsers(dataObj, tokenCaptch, token, username) {
       passwordConfirm: dataObj.passwordConfirm,
       role: dataObj.role,
       token: tokenCaptch
-     }),
+    }),
   };
 
   const response = await fetch(`${url}/admin/${username}/register`, requestOptions);
@@ -67,7 +48,7 @@ export async function addNewUsers(dataObj, tokenCaptch, token, username) {
   return response.json();
 }
 
-export async function updateArticle(dataObj, userId, token) {
+export async function updateUsersRole(dataObj, id, token, username) {
 
   const requestOptions = {
     method: 'PUT',
@@ -76,14 +57,11 @@ export async function updateArticle(dataObj, userId, token) {
       authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      client_name: dataObj.client_name,
-      article_name: dataObj.article_name,
-      contractor: dataObj.contractor,
-      article_type: dataObj.article_type,
+      role: dataObj
     }),
   };
 
-  const response = await fetch(`${url}/articles/${dataObj.id}/user/${userId}`, requestOptions);
+  const response = await fetch(`${url}/admin/${username}/update/${id}`, requestOptions);
 
   if (!response.ok) {
     const data = await response.json();
@@ -93,7 +71,7 @@ export async function updateArticle(dataObj, userId, token) {
   return response.json();
 }
 
-export async function updateArticlesStatus(id, dataObj, userId, token) {
+export async function updateUsersStatus(dataObj, id, token, username) {
   const requestOptions = {
     method: 'PUT',
     headers: {
@@ -101,17 +79,34 @@ export async function updateArticlesStatus(id, dataObj, userId, token) {
       authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      status: dataObj,
+      status: dataObj
     }),
   };
 
 
-  const response = await fetch(`${url}/articles/${id}/status/${userId}`, requestOptions);
+  const response = await fetch(`${url}/admin/${username}/status/${id}`, requestOptions);
 
 
   if (!response.ok) {
     const data = await response.json();
     throw new Error(data.message);
+  }
+
+  return response.json();
+}
+
+
+export async function deleteUsers(id, username) {
+  const requestOptions = {
+    method: 'DELETE'
+  };
+
+  const response = await fetch(`${url}/admin/${username}/delete/${id}`, requestOptions);
+
+
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch data');
   }
 
   return response.json();

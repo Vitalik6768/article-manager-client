@@ -14,7 +14,7 @@ import DataTable from 'react-data-table-component';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
-import { fetchUsersData, addNewUsers } from '../apiCalls/adminApi';
+import { fetchUsersData, addNewUsers, updateUsersRole, updateUsersStatus, deleteUsers } from '../apiCalls/adminApi';
 
 import './Admin.css';
 
@@ -64,105 +64,59 @@ const Admin = () => {
     try {
       const data = await addNewUsers(dataObj, tokenCaptch, token, username);
       setBackEndData(data.users);
-      setMessage('המשתמש הוסף בהצלחה')
-      setSnackbarColor('success');
-      handleClick();
+      messageHandling('המשתמש הוסף בהצלחה', true);
+
 
     } catch (error) {
-         setSnackbarColor('error');
-         handleClick();
-         return setMessage(error)
+      messageHandling(error.message, false);
     }
-    // console.log('data added ');
-    // const requestOptions = {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'authorization': `Bearer ${token}`
-    //   },
-    //   body: JSON.stringify({
-    //     name: dataObj.name,
-    //     email: dataObj.email,
-    //     password: dataObj.password,
-    //     passwordConfirm: dataObj.passwordConfirm,
-    //     role: dataObj.role,
-    //     token: tokenCaptch
-
-    //   })
-    // };
-    // console.log(tokenCaptch);
-    // const response = await fetch(`https://article-manager-api.onrender.com/admin/${username}/register`, requestOptions);
-    // const data = await response.json();
-    // if (response.status === 400) {
-    //   setSnackbarColor('error');
-    //   return setMessage(data.message)
-    // }
-
-
-    // setMessage('המשתמש הוסף בהצלחה')
-    // setSnackbarColor('success');
-    // handleClick();
-
-    // setBackEndData(data.users);
   }
 
 
   async function updateRole(dataObj, id) {
+    try {
+      const data = await updateUsersRole(dataObj, id, token, username);
+      setBackEndData(data.users);
+      messageHandling('התפקיד עודכן בהצלחה', true);
 
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        role: dataObj
+    } catch (error) {
+      messageHandling(error.message, false);
 
-      })
-    };
-    const response = await fetch(`https://article-manager-api.onrender.com/admin/${username}/update/${id}`, requestOptions);
-    const data = await response.json();
-    setMessage('התפקיד עודכן בהצלחה')
-    setSnackbarColor('success');
-    handleClick();
-    setBackEndData(data.users);
+    }
+
   }
 
   async function updateStatus(dataObj, id) {
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': `Bearer ${token}`
+    try {
+      
+      const data = await updateUsersStatus(dataObj, id, token, username);
+      messageHandling('סטטוס עודכן בהצלחה', true)
+      setBackEndData(data.users);
 
-      },
-      body: JSON.stringify({
-        status: dataObj
+    } catch (error) {
+      messageHandling(error.message, false)
 
-      })
-    };
-    const response = await fetch(`https://article-manager-api.onrender.com/admin/${username}/status/${id}`, requestOptions);
-    const data = await response.json();
-    setMessage('סטטוס עודכן בהצלחה')
-    setSnackbarColor('success');
-    handleClick();
-    setBackEndData(data.users);
+    }
+
   }
 
   async function deleteUser(id) {
+    try {
+      const data = await deleteUsers(id, username);
+      messageHandling('המשתמש נמחק בהצלחה', true)
+      setBackEndData(data.users);
+    } catch (error) {
+      messageHandling(error.message, false)
 
-    const requestOptions = {
-      method: 'DELETE'
-    };
-    const response = await fetch(`https://article-manager-api.onrender.com/admin/${username}/delete/${id}`, requestOptions);
-    const data = await response.json();
-    setMessage('המשתמש נמחק בהצלחה')
-    setSnackbarColor('success');
-    handleClick();
-    setBackEndData(data.users);
+    }
+
   }
 
-
+  function messageHandling(mesg, stat){
+    setMessage(mesg);
+    setSnackbarColor(stat ? 'success' : 'error');
+    handleClick();
+  }
 
   const handleClick = () => {
     setOpen(true);

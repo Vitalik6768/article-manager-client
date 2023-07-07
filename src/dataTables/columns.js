@@ -3,7 +3,7 @@ import EditModel from '../components/EditModel';
 import DropDownButton from '../components/DropDownButton';
 
 
-const columns = (updateData, updateStatus) => [
+const columns = (updateData, updateArticleStatus) => [
     {
       name: 'פעולות',
       selector: (row) => (
@@ -24,7 +24,7 @@ const columns = (updateData, updateStatus) => [
     {
       name: 'סטטוס',
       selector: (row) => (
-        <DropDownButton onClick={updateStatus} id={row.id} status={row.status} />
+        <DropDownButton onClick={updateArticleStatus} id={row.id} status={row.status} />
       ),
     },
     {

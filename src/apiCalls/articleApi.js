@@ -1,7 +1,11 @@
+
+
+const url = 'https://article-manager-api.onrender.com';
+
+
 export async function fetchData(userId, token, month = '') {
   
-    //? `https://article-manager-api.onrender.com/articles/${month}/user/${userId}`
-  const response = await fetch(`https://article-manager-api.onrender.com/articles/user/${userId}`, {
+  const response = await fetch(`${url}/articles/user/${userId}`, {
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -17,8 +21,7 @@ export async function fetchData(userId, token, month = '') {
 
 export async function fetchDataByMonth(userId, token, month) {
   
-    //? `https://article-manager-api.onrender.com/articles/${month}/user/${userId}`
-  const response = await fetch(`https://article-manager-api.onrender.com/articles/${month}/user/${userId}`, {
+  const response = await fetch(`${url}/articles/${month}/user/${userId}`, {
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -33,14 +36,11 @@ export async function fetchDataByMonth(userId, token, month) {
 
 
 
+export async function getDataByAlerts(userId) {
+  const response = await fetch(`${url}/alerts/${userId}`);
+  const data = await response.json();
 
-
-
-
-
-
-
-
+}
 
 
 export async function addArticle(dataObj, userId, token) {
@@ -62,7 +62,7 @@ export async function addArticle(dataObj, userId, token) {
      }),
   };
 
-  const response = await fetch('https://article-manager-api.onrender.com/articles/newArticle/', requestOptions);
+  const response = await fetch(`${url}/articles/newArticle/`, requestOptions);
 
   if (!response.ok) {
     const data = await response.json();
@@ -88,7 +88,7 @@ export async function updateArticle(dataObj, userId, token) {
     }),
   };
 
-  const response = await fetch(`https://article-manager-api.onrender.com/articles/${dataObj.id}/user/${userId}`, requestOptions);
+  const response = await fetch(`${url}/articles/${dataObj.id}/user/${userId}`, requestOptions);
 
   if (!response.ok) {
     const data = await response.json();
@@ -98,7 +98,7 @@ export async function updateArticle(dataObj, userId, token) {
   return response.json();
 }
 
-export async function updateArticleStatus(id, dataObj, userId, token) {
+export async function updateArticlesStatus(id, dataObj, userId, token) {
   const requestOptions = {
     method: 'PUT',
     headers: {
@@ -110,7 +110,8 @@ export async function updateArticleStatus(id, dataObj, userId, token) {
     }),
   };
 
-  const response = await fetch(`https://article-manager-api.onrender.com/articles/${id}/status/${userId}`, requestOptions);
+
+  const response = await fetch(`${url}/articles/${id}/status/${userId}`, requestOptions);
 
 
   if (!response.ok) {

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import NavBarNew from '../components/NavBarNew';
 import DashBordNew from '../components/DashBordNew';
-import columns from './columns';
+import columns from '../dataTables/columns';
 import DataTable from 'react-data-table-component';
 import { tableCustomStyles } from '../components/TableStyle';
 import SignInModel from '../components/SignInModel';
@@ -16,11 +16,11 @@ import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
-import { fetchData, addArticle, updateArticle, fetchDataByMonth, updateArticleStatus } from './articleApi';
+import { fetchData, addArticle, updateArticle, fetchDataByMonth, updateArticlesStatus } from '../apiCalls/articleApi';
+
 
 
 function HomePage() {
-
   const cookies = new Cookies();
   const [userId, setUserId] = useState('');
   const [backendData, setBackEndData] = useState([]);
@@ -44,16 +44,14 @@ function HomePage() {
       const decodedToken = jwt(token);
       setUserId(decodedToken.id);
       setToken(token);
-      getDataByCorrentMonth(decodedToken.id, token)
+      getArticlesByCurrentMonth(decodedToken.id, token)
     } else {
        riderectToLogin();
      }
 
   }, [])
 
-
-
-  async function getDataByCorrentMonth(userId, token) {
+  async function getArticlesByCurrentMonth(userId, token) {
     setLoading(true);
     try {
       const data = await fetchData(userId, token);
@@ -64,9 +62,7 @@ function HomePage() {
     }
   }
 
-
-
-  async function getDataByMonth(month) {
+  async function getArticlesByMonth(month) {
     setLoading(true);
     try {
       const data = await fetchDataByMonth(userId, token, month);
@@ -77,16 +73,7 @@ function HomePage() {
     }
   }
 
-  async function getDataByAlerts() {
-    const response = await fetch(`https://article-manager-api.onrender.com/alerts/${userId}`);
-    const data = await response.json();
-    setBackEndData(data);
-  }
-
-
-
-
-  async function postData(dataObj) {
+  async function addNewArticle(dataObj) {
     try {
       const data = await addArticle(dataObj, userId, token);
       setBackEndData(data);
@@ -96,7 +83,7 @@ function HomePage() {
     }
   }
 
-  async function updateData(dataObj) {
+  async function editArticle(dataObj) {
     try {
       const data = await updateArticle(dataObj, userId, token);
       setBackEndData(data);
@@ -106,9 +93,9 @@ function HomePage() {
     }
   }
 
-  async function updateStatus(dataObj, id) {
+  async function updateArticleStatus(dataObj, id) {
     try {
-      await updateArticleStatus(id, dataObj, userId, token);
+      await updateArticlesStatus(id, dataObj, userId, token);
       messageHandling('סטטוס עודכן בהצלחה', true)
     } catch (error) {
       messageHandling(error.message, false)
@@ -149,10 +136,10 @@ function HomePage() {
       <NavBarNew image={backendData.image} />
       <Box sx={{ flexGrow: 1, m: 6 }}>
         <Grid sx={{ mt: 5 }} container spacing={2}>
-          <DashBordNew price={backendData.spend} articles={backendData.count} alerts={backendData.alerts} onClick={getDataByAlerts} />
+          <DashBordNew price={backendData.spend} articles={backendData.count} alerts={backendData.alerts}  />
           <Grid item xs={3}>
             <Item sx={{ mt: 2, backgroundColor: '#fafafa' }} elevation={0}>
-              <SelectMonth onSelect={getDataByMonth} />
+              <SelectMonth onSelect={getArticlesByMonth} />
             </Item>
           </Grid>
 
@@ -164,7 +151,7 @@ function HomePage() {
         
         <Grid container spacing={2}>
           <Grid item xs={8}>
-            <Item sx={{ textAlign: 'left', mt: 5 }} elevation={0}><SignInModel onSubmit={postData} sx={{ display: 'inline-flex' }} />
+            <Item sx={{ textAlign: 'left', mt: 5, mb: 5 }} elevation={0}><SignInModel onSubmit={addNewArticle} sx={{ display: 'inline-flex' }} />
             </Item>
           </Grid>
           <Grid item xs={4}>
@@ -172,9 +159,8 @@ function HomePage() {
           </Grid>
 
         </Grid>
-      </Box>
-
-
+    
+        
 
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
@@ -182,10 +168,11 @@ function HomePage() {
         </Box>
       ) : (
         
-        <DataTable customStyles={tableCustomStyles} columns={columns(updateData, updateStatus)} data={backendData.articles} />
-      )}
-      
+                <DataTable  customStyles={tableCustomStyles} columns={columns(editArticle, updateArticleStatus)} data={backendData.articles} />
 
+              )}
+      </Box>
+      
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <MuiAlert onClose={handleClose} severity={snackbarColor} sx={{ width: '100%' }}>
           {message}

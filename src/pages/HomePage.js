@@ -167,6 +167,7 @@ function HomePage() {
           {message}
         </MuiAlert>
       </Snackbar>
+      
     </div>
   );
 }

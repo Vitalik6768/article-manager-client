@@ -3,6 +3,7 @@
 const url = 'https://article-manager-api.onrender.com';
 
 
+
 export async function fetchUsersData(id, token) {
 
   const response = await fetch(`${url}/admin/${id}/`, {
@@ -82,6 +83,7 @@ export async function updateUsersStatus(dataObj, id, token, username) {
       status: dataObj
     }),
   };
+
 
 
   const response = await fetch(`${url}/admin/${username}/status/${id}`, requestOptions);

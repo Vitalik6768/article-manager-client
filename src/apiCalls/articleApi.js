@@ -12,7 +12,7 @@ export async function fetchData(userId, token) {
   });
   
   if (!response.ok) {
-    throw new Error('Failed to fetch data');
+    throw new Error('אין הרשאה לצפיה');
   }
   
   return response.json();

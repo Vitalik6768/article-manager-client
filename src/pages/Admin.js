@@ -48,7 +48,7 @@ const Admin = () => {
     try {
       const data = await fetchUsersData(id, token);
       setBackEndData(data.users);
-      console.log(data);
+      console.log(data.users);
       setLoading(false);
     } catch (error) {
       setMessageAdmin(error)

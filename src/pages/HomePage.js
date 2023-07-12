@@ -56,7 +56,8 @@ function HomePage() {
       setBackEndData(data);
       setLoading(false);
     } catch (error) {
-      console.error(error);
+      //console.error(error);
+      messageHandling(error.message, false)
     }
   }
 

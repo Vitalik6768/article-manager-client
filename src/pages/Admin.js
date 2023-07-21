@@ -12,6 +12,8 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import { fetchUsersData, addNewUsers, updateUsersRole, updateUsersStatus, deleteUsers } from '../apiCalls/adminApi';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+
 
 import './Admin.css';
 
@@ -57,6 +59,7 @@ const Admin = () => {
 
 
   async function AddUser(dataObj, tokenCaptch) {
+    
 
     try {
       const data = await addNewUsers(dataObj, tokenCaptch, token, username);
@@ -140,7 +143,10 @@ const Admin = () => {
           {messageAdmin}
         </Typography>
         <Box sx={{ width: '50%', ml: 3, mb: 3, mt: 10 }}>
+        <GoogleReCaptchaProvider reCaptchaKey="6Le6_CInAAAAAIlhbvGz5gpx-3OKusU-yEeMi5g8">
           <AddNewUser onSubmit={AddUser} />
+          </GoogleReCaptchaProvider>
+
         </Box>
 
         {loading ? (

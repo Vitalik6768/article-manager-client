@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -9,7 +9,8 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import ReCAPTCHA from "react-google-recaptcha";
+import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+//import ReCAPTCHA from "react-google-recaptcha";
 
 
 
@@ -20,13 +21,32 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 
 
-function AddNewUser(props) {
+// function AddNewUser() {
+//     return (
+//       <GoogleReCaptchaProvider reCaptchaKey="6Le6_CInAAAAAIlhbvGz5gpx-3OKusU-yEeMi5g8">
+//         <AddNewUserCom />
+//       </GoogleReCaptchaProvider>
+//     );
+//   }
+
+
+  function AddNewUser(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [massage, setMassage] = useState(null);
     const [changeColor, setColor] = useState(null);
-    const [tokenCaptch, setToken] = useState(null);
+    const { executeRecaptcha } = useGoogleReCaptcha();
+    const [isReCaptchaLoaded, setReCaptchaLoaded] = useState(false);
+
+
+    useEffect(() => {
+        const loadCaptcha = async () => {
+          setReCaptchaLoaded(true);
+        };
+    
+        loadCaptcha();
+      }, []);
 
 
 
@@ -43,7 +63,7 @@ function AddNewUser(props) {
         setValues({ ...values, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = (event) => {
+    const  handleSubmit = async (event) => {
         event.preventDefault();
 
         if (Object.values(values).some((val) => val === "")) {
@@ -58,14 +78,30 @@ function AddNewUser(props) {
 
 
         if (values.password !== values.passwordConfirm) {
-            console.log(tokenCaptch)
+            
             setColor('red');
             return setMassage('סיסמאות לא תואמות');
 
         }
 
+        try {
+            const token = await executeRecaptcha('registration');
+            
+      
+            if (!token) {
+              setColor('red-text right-align');
+              return setMassage('אנא השלם את הבדיקה של reCAPTCHA');
+            }
+      
+            //postData(values, token);
+            props.onSubmit(values, token);
 
-        props.onSubmit(values, tokenCaptch);
+           
+          } catch (error) {
+            console.error('reCAPTCHA error:', error);
+          }
+
+     
         handleClose(false);
 
     };
@@ -172,14 +208,6 @@ function AddNewUser(props) {
                             </Select>
                         </FormControl>
                         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-
-                            <ReCAPTCHA
-                                sitekey="6LfoGeMlAAAAAGicIfUevIX2zbnEvApm3yOwFcxZ
-                                    "
-                                onChange={tokenCaptch => setToken(tokenCaptch)}
-
-                                onExpired={e => setToken}
-                            />
 
                         </Box>
 

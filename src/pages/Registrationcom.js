@@ -11,19 +11,7 @@ import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recapt
 
 
 
-
-
 function Registration() {
-    return (
-      <GoogleReCaptchaProvider reCaptchaKey="6Le6_CInAAAAAIlhbvGz5gpx-3OKusU-yEeMi5g8">
-        <RegistrationCom />
-      </GoogleReCaptchaProvider>
-    );
-  }
-
-
-
-function RegistrationCom() {
 
     const [values, setValues] = useState({
         name: "",
@@ -35,7 +23,7 @@ function RegistrationCom() {
     });
     const [massage, setMassage] = useState(null);
     const [changeColor, setColor] = useState(null);
-    //const [token, setToken] = useState(null);
+    const [token, setToken] = useState(null);
     const { executeRecaptcha } = useGoogleReCaptcha();
     const [isReCaptchaLoaded, setReCaptchaLoaded] = useState(false);
   
@@ -87,25 +75,29 @@ function RegistrationCom() {
       
           try {
             const token = await executeRecaptcha('registration');
-            
       
             if (!token) {
               setColor('red-text right-align');
               return setMassage('אנא השלם את הבדיקה של reCAPTCHA');
             }
       
-            postData(values, token);
            
           } catch (error) {
             console.error('reCAPTCHA error:', error);
           }
 
-         
+
+          console.log(token);
+
+
+
+
+        //postData(values);
 
 
     }
 
-    async function postData(dataObj, token) {
+    async function postData(dataObj) {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -118,7 +110,7 @@ function RegistrationCom() {
                 token: token
             })
         };
-        const response = await fetch('auth/register/', requestOptions);
+        const response = await fetch('/register/', requestOptions);
         const data = await response.json();
 
 
@@ -141,7 +133,9 @@ function RegistrationCom() {
 
 
     return (
-        <>
+        <GoogleReCaptchaProvider reCaptchaKey="6Le6_CInAAAAAIlhbvGz5gpx-3OKusU-yEeMi5g8">
+
+            
                 <NavBarNew></NavBarNew>
                 <Container id="content">
                     <Grid container>
@@ -277,8 +271,7 @@ function RegistrationCom() {
                     </Grid>
                     
                 </Container>
-                </>
-              
+                </GoogleReCaptchaProvider>
         
     )
 }

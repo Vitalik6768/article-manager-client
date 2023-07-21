@@ -50,7 +50,7 @@ function Login() {
                 password: dataObj.password
             })
         };
-        const response = await fetch('https://article-manager-api.onrender.com/auth/login/', requestOptions);
+        const response = await fetch('/auth/login/', requestOptions);
         const data = await response.json();
         console.log(response.status);
 

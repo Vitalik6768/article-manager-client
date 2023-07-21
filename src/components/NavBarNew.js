@@ -20,29 +20,24 @@ import './NavBarNew.css';
 
 
 
-function NavBarNew(props) {
 
+function NavBarNew(props) {
   const [username, setUsername] = useState('');
   const cookies = new Cookies();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-
- 
-
-  //const pages = ['login', 'Pricing', 'Blog'];
+  // const pages = ['login', 'Pricing', 'Blog'];
   const pages = [
     { id: 'blog', name: 'הרשמה', url: 'registration' }
   ];
 
   const settings = [
     { id: 'username', name: username, url: 'profile' },
-   
     { id: 'logout', name: 'התנתקות', url: 'logout' }
   ];
 
   useEffect(() => {
-    //const cookies = new Cookies();
     const jwtToken = cookies.get('jwt_authentication');
     if (jwtToken) {
       const decodedToken = jwt(jwtToken);
@@ -50,12 +45,11 @@ function NavBarNew(props) {
     }
   }, []);
 
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
 
+  const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -64,18 +58,8 @@ function NavBarNew(props) {
   };
 
   const handleCloseUserMenu = () => {
-    console.log(`669 ${setAnchorElUser}`);
     setAnchorElUser(null);
-
-
   };
-
-
-
-
-
-
-
 
   return (
     <AppBar data-testid="NavBarNew" position="static">
@@ -97,7 +81,6 @@ function NavBarNew(props) {
               '&:hover': {
                 textDecoration: 'none',
               },
-
             }}
           >
             Article Manager 3.0
@@ -132,17 +115,10 @@ function NavBarNew(props) {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-
-              The warning you encountered suggests that there are multiple elements within a loop (such as the map function) that have the same key. In React, each child element within an array should have a unique key prop assigned to it. This key helps React identify and track each individual child during updates.
-
-              To resolve this warning, you need to ensure that the keys assigned to the elements within the loop are unique. In your code, you need to provide a unique identifier for each element when rendering the menu items and settings. Here's an updated version of the relevant code block that addresses the warning:
-
-              jsx
-              Copy code
               {pages.map((page) => (
                 <MenuItem key={page.id} onClick={handleCloseNavMenu}>
-                  <Typography sx={{color: 'white'}} textAlign="center">
-                    <Link sx={{color: 'white'}} to={`/${page.url}`}>{page.name}</Link>
+                  <Typography sx={{ color: 'white' }} textAlign="center">
+                    <Link sx={{ color: 'white' }} to={`/${page.url}`}>{page.name}</Link>
                   </Typography>
                 </MenuItem>
               ))}
@@ -174,8 +150,7 @@ function NavBarNew(props) {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-
-                <Link style={{color: 'white'}} to={`/${page.url}`}>{page.name}</Link>
+                <Link style={{ color: 'white' }} to={`/${page.url}`}>{page.name}</Link>
               </Button>
             ))}
           </Box>
@@ -214,6 +189,7 @@ function NavBarNew(props) {
     </AppBar>
   );
 }
+
 export default NavBarNew;
 
 

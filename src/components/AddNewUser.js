@@ -9,26 +9,8 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
-import { useMediaQuery } from '@mui/material';
-//import ReCAPTCHA from "react-google-recaptcha";
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
-
-
-
-
-//import EditIcon from '@mui/icons-material/Edit';
-
-
-
-
-// function AddNewUser() {
-//     return (
-//       <GoogleReCaptchaProvider reCaptchaKey="6Le6_CInAAAAAIlhbvGz5gpx-3OKusU-yEeMi5g8">
-//         <AddNewUserCom />
-//       </GoogleReCaptchaProvider>
-//     );
-//   }
 
 
   function AddNewUser(props) {

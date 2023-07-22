@@ -43,7 +43,7 @@ function SignInModel(props) {
         top: '40%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 500,
+        width: '60%',
         higth: 200,
         bgcolor: 'background.paper',
         boxShadow: '24px',

@@ -8,6 +8,10 @@ import NavBarNew from '../components/NavBarNew';
 import Cookies from 'universal-cookie';
 import jwt from 'jwt-decode';
 import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import { Container } from "@mui/material";
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
 
 
 
@@ -21,6 +25,13 @@ function ProfilePage() {
   const [token, setToken] = useState('');
   let [loading, setImageLoading] = useState(true);
   const [image, setImage] = useState();
+
+  const Item = styled(Paper)(({ theme }) => ({
+
+    textAlign: 'center',
+
+    height: '100%',
+  }));
 
 
 
@@ -62,34 +73,65 @@ function ProfilePage() {
   return (
     <>
       <NavBarNew image={image} />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          minHeight: '100vh',
-        }}
-      >
-        <Box sx={{ marginLeft: 10, textAlign: 'right', marginRight: 5 }}>
-          <Typography variant="h6">{name} : שם</Typography>
-          <Typography variant="h6">{email} : מייל</Typography>
-          <Typography variant="h6">{role} : תפקיד</Typography>
-          <FileUpload onSubmit={() => getUserProfile(username, token)} id={username} />
+      <Container maxWidth="xs">
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: '65vh',
+          }}
+        >
+
+
+          {loading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <CircularProgress />
+            </Box>
+          ) : (
+            <Avatar
+              alt="Your Avatar"
+              src={`https://article-manager-api.onrender.com/images/${image}`}
+              //sx={{ width: 300, height: 300 }}
+              sx={{
+                width: { xs: 150, md: 300 },
+                height: { xs: 150, md: 300 },
+
+                // Add some spacing at the bottom on small screens only
+              }}
+            />
+          )}
+
+
         </Box>
 
-        {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
-            <CircularProgress />
-          </Box>
-        ) : (
-          <Avatar
-            alt="Your Avatar"
-            src={`https://article-manager-api.onrender.com/images/${image}`}
-            sx={{ width: 300, height: 300 }}
-          />
-        )}
-      </Box>
+
+        <Grid container spacing={2}>
+          <Grid item xs={4} md={4} container justifyContent="center" alignItems="center">
+            <Item elevation={0}>
+              <Typography variant="h5">שם</Typography>
+              <Typography variant="subtitle1">{name}</Typography>
+            </Item>
+          </Grid>
+          <Grid item xs={4} md={4} container justifyContent="center" alignItems="center">
+            <Item elevation={0}>
+              <Typography variant="h5">מייל</Typography>
+              <Typography variant="subtitle1">{email}</Typography>
+            </Item>
+          </Grid>
+          <Grid item xs={4} md={4} container justifyContent="center" alignItems="center">
+            <Item elevation={0}>
+              <Typography variant="h5">תפקיד</Typography>
+              <Typography variant="subtitle1">{role}</Typography>
+            </Item>
+          </Grid>
+
+        </Grid>
+        <FileUpload onSubmit={() => getUserProfile(username, token)} id={username} />
+
+
+      </Container >
     </>
   );
 

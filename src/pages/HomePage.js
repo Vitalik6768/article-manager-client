@@ -127,7 +127,7 @@ function HomePage() {
       <Box sx={{ flexGrow: 1, m: 6 }}>
         <Grid sx={{ mt: 5 }} container spacing={2}>
           <DashBordNew price={backendData.spend} articles={backendData.count} alerts={backendData.alerts}  />
-          <Grid item xs={3}>
+          <Grid item xs={6} md={3}>
             <Item sx={{ mt: 2, backgroundColor: '#fafafa' }} elevation={0}>
               <SelectMonth onSelect={getArticlesByMonth} />
             </Item>

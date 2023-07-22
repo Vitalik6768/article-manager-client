@@ -72,9 +72,9 @@ function FileUpload(props) {
 
     return (
         <>
-            <Container maxWidth="md" sx={{ mt: 3 }}>
+            <Container maxWidth="md" sx={{ mt: 2 }}>
 
-                <Stack direction="row" alignItems="right" spacing={5}>
+                <Stack direction="row" alignItems="right" spacing={3}>
                     <Button variant="contained" component="span" type="submit" onClick={handleUpload}>
                         Upload
                     </Button>

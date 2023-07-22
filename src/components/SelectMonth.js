@@ -6,16 +6,21 @@ import Select from '@mui/material/Select';
 
 function SelectMonth(props) {
     const [month, setMonth] = useState("");
-  
+
     const handleMonthChange = (e) => {
         const selectedMonth = e.target.value;
         setMonth(selectedMonth);
         props.onSelect(selectedMonth)
     };
-  
+
     return (
         <div>
-            <FormControl sx={{ mt: 1, minWidth: 260, textAlign: 'right' }} size="small">
+            <FormControl sx={{
+                mt: 1,
+                minWidth: '80%',
+                maxWidth: 250,
+                textAlign: { xs: 'center', sm: 'right' },
+            }} size="small">
                 <InputLabel id="demo-simple-select-helper-label">בחירת חודש</InputLabel>
                 <Select
                     labelId="demo-simple-select-helper-label"
@@ -40,7 +45,7 @@ function SelectMonth(props) {
                     <MenuItem value={11}>נובמבר</MenuItem>
                     <MenuItem value={12}>דצמבר</MenuItem>
                 </Select>
-               
+
             </FormControl>
         </div>
     );

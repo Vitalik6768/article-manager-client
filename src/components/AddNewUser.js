@@ -10,6 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { useMediaQuery } from '@mui/material';
 //import ReCAPTCHA from "react-google-recaptcha";
 
 
@@ -111,7 +112,7 @@ import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recapt
         top: '40%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 500,
+        width: '50%',
         higth: 200,
         bgcolor: 'background.paper',
         boxShadow: '24px',
@@ -120,6 +121,8 @@ import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recapt
         m: 3,
         borderRadius: '8px'
     };
+
+
 
     return (
         <div>

@@ -14,7 +14,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import './NavBarNew.css';
 
 
@@ -62,9 +61,10 @@ function NavBarNew(props) {
   };
 
   return (
-    <AppBar data-testid="NavBarNew" position="static">
+    <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          
           <Typography
             variant="h6"
             noWrap
@@ -78,12 +78,9 @@ function NavBarNew(props) {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
-              '&:hover': {
-                textDecoration: 'none',
-              },
             }}
           >
-            Article Manager 3.0
+            Article Manager
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -118,13 +115,15 @@ function NavBarNew(props) {
               {pages.map((page) => (
                 <MenuItem key={page.id} onClick={handleCloseNavMenu}>
                   <Typography sx={{ color: 'white' }} textAlign="center">
-                    <Link sx={{ color: 'white' }} to={`/${page.url}`}>{page.name}</Link>
+                    <Link sx={{ color: 'white' }} to={`/${page.url}`}>
+                      {page.name}
+                    </Link>
                   </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+       
           <Typography
             variant="h5"
             noWrap
@@ -141,7 +140,7 @@ function NavBarNew(props) {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -150,7 +149,9 @@ function NavBarNew(props) {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link style={{ color: 'white' }} to={`/${page.url}`}>{page.name}</Link>
+                <Link style={{ color: 'white' }} to={`/${page.url}`}>
+                  {page.name}
+                </Link>
               </Button>
             ))}
           </Box>
@@ -188,9 +189,10 @@ function NavBarNew(props) {
       </Container>
     </AppBar>
   );
+
 }
 
-export default NavBarNew;
+      export default NavBarNew;
 
 
 

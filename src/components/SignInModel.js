@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import Container from '@mui/material/Container';
 //import EditIcon from '@mui/icons-material/Edit';
 
 
@@ -40,22 +41,25 @@ function SignInModel(props) {
 
     const style = {
         position: 'absolute',
-        top: '40%',
+        top: '45%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '60%',
+        width: '80%',
+        maxWidth: '500px',
         higth: 200,
         bgcolor: 'background.paper',
         boxShadow: '24px',
         textAlign: 'right',
-        p: 3,
-        m: 3,
-        borderRadius: '8px'
+        p: 4,
+        borderRadius: '8px',
+        justifyContent: 'center'
     };
 
     return (
-        <div>
+        <>
+           
             <Button variant="contained" onClick={handleOpen}>+ הוספת מאמר</Button>
+           
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -147,7 +151,8 @@ function SignInModel(props) {
                     </form>
                 </Box>
             </Modal>
-        </div>
+       
+        </>
     );
 }
 

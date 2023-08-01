@@ -41,17 +41,18 @@ function EditModel(props) {
 
   const style = {
     position: 'absolute',
-    top: '40%',
+    top: '45%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '60%',
+    width: '80%',
+    maxWidth: '500px',
     higth: 200,
     bgcolor: 'background.paper',
     boxShadow: '24px',
     textAlign: 'right',
-    p: 3,
-    m: 3,
-    borderRadius: '8px'
+    p: 4,
+    borderRadius: '8px',
+    justifyContent: 'center'
   };
 
   return (

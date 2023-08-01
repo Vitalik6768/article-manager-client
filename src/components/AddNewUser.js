@@ -13,7 +13,7 @@ import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 
 
-  function AddNewUser(props) {
+function AddNewUser(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -25,11 +25,11 @@ import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
     useEffect(() => {
         const loadCaptcha = async () => {
-          setReCaptchaLoaded(true);
+            setReCaptchaLoaded(true);
         };
-    
+
         loadCaptcha();
-      }, []);
+    }, []);
 
 
 
@@ -39,14 +39,14 @@ import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
         password: "",
         passwordConfirm: "",
         role: ""
-      
+
     });
 
     const onChangeMethod = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })
     }
 
-    const  handleSubmit = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (Object.values(values).some((val) => val === "")) {
@@ -61,7 +61,7 @@ import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 
         if (values.password !== values.passwordConfirm) {
-            
+
             setColor('red');
             return setMassage('סיסמאות לא תואמות');
 
@@ -69,39 +69,40 @@ import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
         try {
             const token = await executeRecaptcha('registration');
-            
-      
+
+
             if (!token) {
-              setColor('red-text right-align');
-              return setMassage('אנא השלם את הבדיקה של reCAPTCHA');
+                setColor('red-text right-align');
+                return setMassage('אנא השלם את הבדיקה של reCAPTCHA');
             }
-      
+
             //postData(values, token);
             props.onSubmit(values, token);
 
-           
-          } catch (error) {
-            console.error('reCAPTCHA error:', error);
-          }
 
-     
+        } catch (error) {
+            console.error('reCAPTCHA error:', error);
+        }
+
+
         handleClose(false);
 
     };
 
     const style = {
         position: 'absolute',
-        top: '40%',
+        top: '45%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '50%',
+        width: '80%',
+        maxWidth: '500px',
         higth: 200,
         bgcolor: 'background.paper',
         boxShadow: '24px',
         textAlign: 'right',
-        p: 3,
-        m: 3,
-        borderRadius: '8px'
+        p: 4,
+        borderRadius: '8px',
+        justifyContent: 'center'
     };
 
 

@@ -11,6 +11,7 @@ import LockIcon from '@mui/icons-material/Lock';
 
 
 
+
 function Login() {
     const cookies = new Cookies();
     const [message, setMessage] = useState(null);
@@ -90,8 +91,8 @@ function Login() {
 
             <Container id="content">
                 <Grid container sx={{m:3}}>
-                    <Grid item xs={12} sm={3} sx={{ml:3}} />
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={3} md={3} sx={{ml:3}} />
+                    <Grid item xs={6} md={6}>
                         <br />
                         <form onSubmit={handleSubmit}>
                             <Card variant="outlined">

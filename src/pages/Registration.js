@@ -139,6 +139,7 @@ function RegistrationCom() {
         }, 1000);
     }
 
+    
 
     return (
         <>

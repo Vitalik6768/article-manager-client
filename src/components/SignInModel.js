@@ -58,7 +58,7 @@ function SignInModel(props) {
     return (
         <>
            
-            <Button variant="contained" onClick={handleOpen}>+ הוספת מאמר</Button>
+            <Button variant="contained" size='small' onClick={handleOpen}>+ הוספת מאמר</Button>
            
             <Modal
                 open={open}

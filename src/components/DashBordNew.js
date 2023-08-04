@@ -29,7 +29,7 @@ function DashBordNew(props) {
           <Item data-testid="item2" sx={{mt:2, backgroundColor:'#fafafa'}} elevation={0}><Typography sx={{pt:2}} variant="h6" component="h5">{props.alerts}: חריגה</Typography></Item>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Item data-testid="item3" sx={{mt:2, backgroundColor:'#fafafa'}} elevation={0}><Typography sx={{pt:2}} variant="h6" component="h5">{props.articles} : מאמרים שהוזמנו</Typography></Item>
+          <Item data-testid="item3" sx={{mt:2, backgroundColor:'#fafafa'}} elevation={0}><Typography sx={{pt:2}} variant="h6" component="h5">{props.articles} : מאמרים</Typography></Item>
         </Grid>
 
         </>

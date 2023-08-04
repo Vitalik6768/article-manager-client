@@ -23,13 +23,13 @@ function DashBordNew(props) {
     <>
 
         <Grid item xs={6} md={3} >
-          <Item data-testid="item1" sx={{mt:2, backgroundColor:'#fafafa'}} elevation={0}><Typography sx={{pt:2}} variant="h5" component="h4">{formatter.format(props.price)} : תקציב</Typography></Item>
+          <Item data-testid="item1" sx={{mt:2, backgroundColor:'#fafafa'}} elevation={0}><Typography sx={{pt:2}} variant="h6" component="h5">{formatter.format(props.price)} : תקציב</Typography></Item>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Item data-testid="item2" sx={{mt:2, backgroundColor:'#fafafa'}} elevation={0}><Typography sx={{pt:2}} variant="h5" component="h4">{props.alerts}: חריגה</Typography></Item>
+          <Item data-testid="item2" sx={{mt:2, backgroundColor:'#fafafa'}} elevation={0}><Typography sx={{pt:2}} variant="h6" component="h5">{props.alerts}: חריגה</Typography></Item>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Item data-testid="item3" sx={{mt:2, backgroundColor:'#fafafa'}} elevation={0}><Typography sx={{pt:2}} variant="h5" component="h4">{props.articles} : מאמרים שהוזמנו</Typography></Item>
+          <Item data-testid="item3" sx={{mt:2, backgroundColor:'#fafafa'}} elevation={0}><Typography sx={{pt:2}} variant="h6" component="h5">{props.articles} : מאמרים שהוזמנו</Typography></Item>
         </Grid>
 
         </>

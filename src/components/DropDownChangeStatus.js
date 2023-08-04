@@ -17,9 +17,7 @@ function DropDownChangeStatus(props) {
     const anchorRef = React.useRef(null);
     const [selectedIndex, setSelectedIndex] = React.useState(initialSelectedIndex);
 
-    const handleClick = () => {
-        console.log(`You clicked ${options[selectedIndex]}`);
-    };
+ 
 
     const handleMenuItemClick = (event, index) => {
         setSelectedIndex(index);
@@ -42,7 +40,6 @@ function DropDownChangeStatus(props) {
     return (
         <>
             <ButtonGroup variant="outlined" size='small' ref={anchorRef} aria-label="split button">
-                <Button onClick={handleClick}>{options[selectedIndex]}</Button>
                 <Button
                     size="small"
                     aria-controls={open ? 'split-button-menu' : undefined}
@@ -51,6 +48,7 @@ function DropDownChangeStatus(props) {
                     aria-haspopup="menu"
                     onClick={handleToggle}
                 >
+                    {options[selectedIndex]}
                     <ArrowDropDownIcon />
                 </Button>
             </ButtonGroup>

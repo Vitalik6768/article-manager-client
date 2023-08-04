@@ -17,9 +17,7 @@ function DropDownButtonNew(props) {
     const anchorRef = React.useRef(null);
     const [selectedIndex, setSelectedIndex] = React.useState(initialSelectedIndex);
 
-    const handleClick = () => {
-        console.log(`You clicked ${options[selectedIndex]}`);
-    };
+
 
     const handleMenuItemClick = (event, index) => {
         setSelectedIndex(index);
@@ -42,16 +40,19 @@ function DropDownButtonNew(props) {
     return (
         <>
             <ButtonGroup variant="outlined" ref={anchorRef} size="small" aria-label="split button">
-                <Button onClick={handleClick}>{options[selectedIndex]}</Button>
+            
                 <Button
+                
                     size="small"
                     aria-controls={open ? 'split-button-menu' : undefined}
                     aria-expanded={open ? 'true' : undefined}
                     aria-label="select merge strategy"
                     aria-haspopup="menu"
                     onClick={handleToggle}
+                    
                 >
-                    <ArrowDropDownIcon />
+                    {options[selectedIndex]}
+                    <ArrowDropDownIcon fontSize="small" />
                 </Button>
             </ButtonGroup>
             <Popper
